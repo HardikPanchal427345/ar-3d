@@ -21,6 +21,7 @@
       /* flex-direction: row; */
       /* width: 100vw; */
     }
+
     .slides {
       display: flex;
       justify-content: center;
@@ -57,9 +58,9 @@
     <!-- Use it like any other HTML element -->
     <model-viewer id="myModel" style="width: 100vw; height: 100vh;"
       alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
-      touch-action="pan-y" src="./nissan_navara_2021_calibre_e.glb" ar ar-tracking="tracking" 
-      poster="./favicon.ico" camera-controls shadow-intensity="5"></model-viewer>
-<!-- ar-scale="fixed" -->
+      touch-action="pan-y" src="./nissan_navara_2021_calibre_e.glb" ar ar-tracking="tracking" disable-tap
+      ar-modes="scene-viewer quick-look" ar-scale="fixed" poster="./favicon.ico" camera-controls
+      shadow-intensity="5"></model-viewer>
     <div class="slider">
       <div class="slides">
         <button class="slide selected"
