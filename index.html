@@ -7,33 +7,88 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <style>
+    .slider {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      /* display: flex; */
+      /* flex-direction: row; */
+      width: 100vw;
+    }
+    .slides {
+      display: flex;
+    }
+
+    .slide {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #fff;
+      margin-right: 10px;
+      border-radius: 10px;
+      border: none;
+      display: flex;
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
 </head>
 
 <body>
   <!-- Import the component -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 
-  <!-- Use it like any other HTML element -->
-  <model-viewer id="myModel" style="width: 100vw; height: 100vh;"
-  alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"  touch-action="pan-y"
-  src="./nissan_navara_2021_calibre_e.glb" ar ar-tracking="tracking" poster="./favicon.ico" camera-controls
-  shadow-intensity="5"></model-viewer>
+  <div style="position: relative;">
+
+    <!-- Use it like any other HTML element -->
+    <model-viewer id="myModel" style="width: 100vw; height: 100vh;"
+      alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
+      touch-action="pan-y" src="./nissan_navara_2021_calibre_e.glb" ar ar-tracking="tracking" ar-scale="fixed"
+      poster="./favicon.ico" camera-controls shadow-intensity="5"></model-viewer>
+
+    <div class="slider">
+      <div class="slides">
+        <button class="slide selected"
+          onclick="switchSrc(this, 'https://first-free-bucket-hnpanchal.s3.amazonaws.com/modified_nissan_4x4.glb')">
+          Nissan 4x4
+        </button><button class="slide"
+          onclick="switchSrc(this, 'https://first-free-bucket-hnpanchal.s3.amazonaws.com/Chair.glb')">
+          Chair
+        </button><button class="slide"
+          onclick="switchSrc(this, 'https://first-free-bucket-hnpanchal.s3.amazonaws.com/post-apocalyptic_vehicle.glb')">
+          Buggy
+        </button><button class="slide"
+          onclick="switchSrc(this, 'https://first-free-bucket-hnpanchal.s3.amazonaws.com/nissan_navara_2021_calibre_e.glb')">
+          Nissan Puckup
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ar-modes="scene-viewer quick-look"
   skybox-image="./assets/spruit_sunrise_1k_HDR.jpg" skybox-height="0.5m"
   max-camera-orbit="auto 90deg auto" -->
 
   <script>
-    const modelViewer = document.querySelector("#myModel");
+    const modelViewer = document.querySelector("model-viewer");
 
-    // Event listener for when the model loads
-    // modelViewer.addEventListener("load", () => {
-    //   // Access the 3D model's scene and apply a scale to the model
-    //   const model = modelViewer.model;
-    //   if (model) {
-    //     // Scaling the model (x, y, z) axes - change values as needed
-    //     model.scale.set(20, 20, 20); // This will scale the model by 1.5x in all axes
-    //   }
-    // });
+    window.switchSrc = (element, name) => {
+      // const base = "../../assets/ShopifyModels/" + name;
+      modelViewer.src = name;
+      // modelViewer.poster = base + '.webp';
+      // const slides = document.querySelectorAll(".slide");
+      // slides.forEach((element) => { element.classList.remove("selected"); });
+      // element.classList.add("selected");
+    };
   </script>
   <!-- <app-root></app-root> -->
 </body>
