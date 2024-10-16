@@ -84,51 +84,55 @@
   skybox-image="./assets/spruit_sunrise_1k_HDR.jpg" skybox-height="0.5m"
   max-camera-orbit="auto 90deg auto" -->
 
-  <script>
-    // Target GPS coordinates (where the model will be shown)
-    const targetLatitude = 23.028673;  // Replace with your target latitude
-    const targetLongitude = 72.528757; // Replace with your target longitude
-    const maxDistance = 0.01; // Maximum distance in kilometers
+ <script>
+        // Target GPS coordinates (where the model will be shown)
+        const targetLatitude = 23.028673;  // Replace with your target latitude
+        const targetLongitude = 72.528757; // Replace with your target longitude
+        const maxDistance = 0.1; // Maximum distance in kilometers
 
-    // Get user's current position
-    navigator.geolocation.getCurrentPosition((position) => {
-      const userLatitude = position.coords.latitude;
-      const userLongitude = position.coords.longitude;
+        // Watch for changes in the user's location
+        const watchId = navigator.geolocation.watchPosition((position) => {
+            const userLatitude = position.coords.latitude;
+            const userLongitude = position.coords.longitude;
 
-      // Calculate the distance between user's location and target location
-      const distance = calculateDistance(userLatitude, userLongitude, targetLatitude, targetLongitude);
-      alert(distance)
-      // Show or hide the model based on the distance
-      const modelElement = document.getElementById('myModel');
-      if (distance <= maxDistance) {
-        modelElement.style.display = 'block'; // Show the model if within 100 km
-        positionModelElement(modelElement);
-      } else {
-        modelElement.style.display = 'none'; // Hide the model if outside 100 km
-      }
-    }, (error) => {
-      console.error("Error getting location:", error);
-    });
+            // Calculate the distance between user's location and target location
+            const distance = calculateDistance(userLatitude, userLongitude, targetLatitude, targetLongitude);
 
-    // Function to calculate the distance between two lat/lon points using the Haversine formula
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371; // Radius of the Earth in km
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      const distance = R * c; // Distance in km
-      return distance;
-    }
+            // Show or hide the model based on the distance
+            const modelElement = document.getElementById('myModel');
+            if (distance <= maxDistance) {
+                modelElement.style.display = 'block'; // Show the model if within 100 km
+                positionModelElement(modelElement);
+            } else {
+                modelElement.style.display = 'none'; // Hide the model if outside 100 km
+            }
+        }, (error) => {
+            console.error("Error getting location:", error);
+        }, {
+            enableHighAccuracy: true, // Enable high-accuracy mode
+            maximumAge: 0,            // Don't use cached location
+            timeout: 5000             // Timeout after 5 seconds
+        });
 
-    // Function to position the model (for demonstration purposes)
-    function positionModelElement(element) {
-      element.style.top = `${window.innerHeight / 2}px`; // Vertical center
-      element.style.left = `${window.innerWidth / 2}px`;  // Horizontal center
-    }
-  </script>
+        // Function to calculate the distance between two lat/lon points using the Haversine formula
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of the Earth in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c; // Distance in km
+            return distance;
+        }
+
+        // Function to position the model (for demonstration purposes)
+        function positionModelElement(element) {
+            element.style.top = `${window.innerHeight / 2}px`; // Vertical center
+            element.style.left = `${window.innerWidth / 2}px`;  // Horizontal center
+        }
+    </script>
   <!-- <app-root></app-root> -->
 </body>
 
