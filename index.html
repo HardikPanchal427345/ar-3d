@@ -97,7 +97,7 @@
 
             // Calculate the distance between user's location and target location
             const distance = calculateDistance(userLatitude, userLongitude, targetLatitude, targetLongitude);
-
+            alert(distance)
             // Show or hide the model based on the distance
             const modelElement = document.getElementById('myModel');
             if (distance <= maxDistance) {
